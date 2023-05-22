@@ -4,6 +4,10 @@ package com.crud.gestioncursos.web.controller;
 import com.crud.gestioncursos.domain.Course;
 import com.crud.gestioncursos.domain.service.CourseService;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,20 +24,21 @@ public class CourseController {
     private CourseService courseService;
 
     @GetMapping("/all")
-    /*@Operation(summary = "Get all supermarket products")
-    @ApiResponse(responseCode = "200", description = "OK")*/
+    @ApiOperation("Get all Courses")
+    @ApiResponse(code =200, message = "OK")
     public ResponseEntity<List<Course>> getAll(){
 
         return new ResponseEntity<>(courseService.getAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-  /*  @Operation(summary = "Search a product with an ID")
+    @ApiOperation("Search a product with an ID")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "OK"),
-            @ApiResponse(responseCode = "404", description = "Product not found")
-    })*/
-    public ResponseEntity<Course> getCourse(@PathVariable("id") int courseId){
+            @ApiResponse(code =200, message = "OK"),
+            @ApiResponse(code =404, message = "Course Not Found")
+    })
+    public ResponseEntity<Course> getCourse(@ApiParam(value = "The Id of the Course", required = true, example = "4")
+                                                @PathVariable("id") int courseId){
 
         return courseService.getCourse(courseId)
                 .map(course -> new ResponseEntity<>(course, HttpStatus.OK))

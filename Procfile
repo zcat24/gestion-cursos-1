@@ -1,0 +1,1 @@
+web: java -jar -Dspring.profiles.active=prod build/libs/gestion-cursos-1.0.jar
